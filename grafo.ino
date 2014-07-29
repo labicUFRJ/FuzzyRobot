@@ -67,8 +67,7 @@ void drawSurface(int idSensor){ // Faz o robo se mover na trajetoria desejava a 
                       ||sensor3|
                       |
                     */
-           setHorizontal();                    
-           drawSurface(idSensor);          
+           setHorizontal();                             
       break;
       
       case 2: // id 2
@@ -95,10 +94,17 @@ void drawSurface(int idSensor){ // Faz o robo se mover na trajetoria desejava a 
                                          F
               */
           setHorizontal();
-          drawSurface(idSensor);          
+                  
       break;
       
       case 4: // id 4
+              /*
+              
+              ---|sensor5|-
+                          |
+                          |
+                          F
+              */
           motor.forward(graph[idSensor][idSensor + 1] / 2);
           motor.right(90);
           motor.forward(graph[idSensor][idSensor + 1] / 2);      

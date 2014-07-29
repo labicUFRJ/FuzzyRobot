@@ -49,8 +49,8 @@ DCMotor motor(0.5, 0.05, 0.05) ;
 
 
 void setup(){
-  attachInterrupt( 2 , receiveIdSensor , CHANGE) ;
-  IR.Init(21);
+  
+  IR.Init(A4);
   Serial.begin(38400);// frequencia do emissor de infravermelho
   Serial1.begin(38400);
 //  Serial2.begin(38400);
@@ -98,8 +98,6 @@ void loop(){
   //  Ver o que o Tiago pôs no código dele!                 //
   ////////////////////////////////////////////////////////////
   
-  int duracaoMovimento;
-  
   while(!fim){
         
     //Saídas do controlador na última iteração:
@@ -116,6 +114,9 @@ void loop(){
     Serial.print("Phi = ");
     Serial.println(phi);
     Serial.println();
+    
+    //Recebe id do sensor IR que estiver proximo
+    receiveIdSensor();
     
     //Detecta obstáculos:
     Serial.println("Deteccoes:");
