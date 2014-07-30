@@ -43,19 +43,27 @@ float saida[NUMOUTPUTS];
 float theta;
 float delta;
 
+int idSensor;
+
 boolean fim = 0;
+
+int edges[NEDGES] = {5,20,10,5};
+
+int graph[NVERTICES][NVERTICES];
 
 DCMotor motor(0.5, 0.05, 0.05) ;
 
 
 void setup(){
   
-  IR.Init(A4);
+  attachInterrupt(2,receiveIdSensor,CHANGE);
+  IR.Init(21);
   Serial.begin(38400);// frequencia do emissor de infravermelho
   Serial1.begin(38400);
-//  Serial2.begin(38400);
+  //Serial2.begin(38400);
   //Serial1.begin(115200);
   
+  buildGraph(); // constroi o grafo do predio
   servoPingSetup();
   motor.begin();
   
@@ -65,11 +73,11 @@ void setup(){
   Serial.println("Inicializando o sensor HM55B...");
   Serial.println();
   HM55B_Reset();
-//  HM55B_Calibration();
+  //HM55B_Calibration();
   HM55B_CurrentCalibrationValues();
   
   setHorizontal();
-//  currentHorizontal();
+  //currentHorizontal();
   
   //Espera para colocar o robô na posição inicial do ambiente:
   //delay(60000);
@@ -83,14 +91,14 @@ void setup(){
   theta = saida[0];
   delta = saida[1];
   
-//  randomSeed(analogRead(0)); //Usado pra testar a memória
+  //randomSeed(analogRead(0)); //Usado pra testar a memória
   
   delay(1500);
 }
 
 void loop(){
-//  debug();
-//  delay(600000);
+  //debug();
+  //delay(600000);
   
   ////////////////////////////////////////////////////////////
   //  Vai ter um limite de passos? Acho interessante,       //
@@ -99,7 +107,9 @@ void loop(){
   ////////////////////////////////////////////////////////////
   
   while(!fim){
-        
+    
+    drawSurface();
+    /*        
     //Saídas do controlador na última iteração:
     theta = saida[0];
     delta = saida[1];
@@ -116,7 +126,7 @@ void loop(){
     Serial.println();
     
     //Recebe id do sensor IR que estiver proximo
-    receiveIdSensor();
+    //receiveIdSensor();
     
     //Detecta obstáculos:
     Serial.println("Deteccoes:");
@@ -159,11 +169,12 @@ void loop(){
     motor.forward(delta);
     prevPhi = phi;
     
-//    delay(1500);
+    //delay(1500);
     
     Serial.println();
     Serial.println("===========================================");
     Serial.println();
+    */
   }
 }
 
