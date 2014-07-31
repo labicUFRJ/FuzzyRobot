@@ -43,7 +43,7 @@ float saida[NUMOUTPUTS];
 float theta;
 float delta;
 
-int idSensor;
+int idSensor = 255;
 
 boolean fim = 0;
 
