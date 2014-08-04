@@ -14,7 +14,9 @@
                                                |
                                                F
 */
-
+//////////////////////////////////////////////////////
+// OBS: o receptor detecta o sinal a 60cm do emissor//
+//////////////////////////////////////////////////////
 
 void buildGraph(){
   
@@ -31,10 +33,16 @@ void buildGraph(){
 void printGraph(){
   
     int i,j;
-    for(i = 0; i< NVERTICES; i++)
-              for(j = 0; j< NVERTICES; j++)
-                  Serial.println(graph[i][j]);
-
+    
+    Serial.println("matriz de adjacencia");
+    for(i = 0; i< NVERTICES; i++){
+              Serial.println(" ");
+              for(j = 0; j< NVERTICES; j++){
+                  Serial.print(graph[i][j]);
+                  Serial.print(" ");                  
+              }
+    }
+    Serial.println(" ");
 }
 
 void drawSurface(){ // Faz o robo se mover na trajetoria desejava a partir do valor do id do sensor

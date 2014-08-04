@@ -18,7 +18,6 @@
 #include "libFuzzy.h"
 #include <IRSendRev.h>
 
-
 #define NVERTICES 5
 #define NEDGES 4
 
@@ -47,24 +46,27 @@ int idSensor = 255;
 
 boolean fim = 0;
 
-int edges[NEDGES] = {5,20,10,5};
+int edges[NEDGES] = {500,2000,1000,500};
 
 int graph[NVERTICES][NVERTICES];
 
 DCMotor motor(0.5, 0.05, 0.05) ;
 
-
 void setup(){
   
   attachInterrupt(2,receiveIdSensor,CHANGE);
-  IR.Init(21);
+  IR.Init(21); // inicializa o pino de sinal do receptor IR
+  
   Serial.begin(38400);// frequencia do emissor de infravermelho
   Serial1.begin(38400);
   //Serial2.begin(38400);
   //Serial1.begin(115200);
   
-  buildGraph(); // constroi o grafo do predio
+  buildGraph(); // constroi a matriz de adjacencia que representa grafo do predio
+  printGraph(); //imprime a matriz de adjacencia
+  
   servoPingSetup();
+  
   motor.begin();
   
   Serial.println("Log de navegacao:");
