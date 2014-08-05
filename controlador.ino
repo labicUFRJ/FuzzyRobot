@@ -102,12 +102,6 @@ void loop(){
   //debug();
   //delay(600000);
   
-  ////////////////////////////////////////////////////////////
-  //  Vai ter um limite de passos? Acho interessante,       //
-  //  pra não ter que sair correndo atrás do robô, rsrs...  //
-  //  Ver o que o Tiago pôs no código dele!                 //
-  ////////////////////////////////////////////////////////////
-  
   while(!fim){
     
     drawSurface();

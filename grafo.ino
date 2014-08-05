@@ -14,6 +14,25 @@
                                                |
                                                F
 */
+
+//OU
+
+/* Graph
+
+   I-----|sensor1|--
+                    |
+                    |
+                    |
+                    |
+                    |
+                    ||sensor3|
+                    |
+                     ----------------|sensor5|--
+                                                |
+                                                |
+                                                F
+*/
+
 //////////////////////////////////////////////////////
 // OBS: o receptor detecta o sinal a 60cm do emissor//
 //////////////////////////////////////////////////////
@@ -55,10 +74,18 @@ void drawSurface(){ // Faz o robo se mover na trajetoria desejava a partir do va
                                ||sensor2|
                                |  */
         
-          Serial.println(graph[idSensor][idSensor + 1] / 2);
+          Serial.println(graph[idSensor][idSensor + 1]);
+          delay(500);
           motor.forward(graph[idSensor][idSensor + 1] / 2);
+          motor.stop();
+          delay(500);
           motor.right(90);
+          motor.stop();
+          delay(500);
           motor.forward(graph[idSensor][idSensor + 1] / 2);
+          motor.stop();
+          delay(500);
+          setHorizontal();
           idSensor = 255;
           
       break;
