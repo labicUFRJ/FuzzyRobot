@@ -18,8 +18,8 @@
 #include "libFuzzy.h"
 #include <IRSendRev.h>
 
-#define NVERTICES 5
-#define NEDGES 4
+#define NVERTICES 4
+#define NEDGES 3
 
 ////LibPosicao\\\\
 //Valor de referência para a horizontal do ambiente:
@@ -46,7 +46,7 @@ int idSensor = 255;
 
 boolean fim = 0;
 
-int edges[NEDGES] = {500,2000,1000,500};
+int edges[NEDGES] = {200,200,200};
 
 int graph[NVERTICES][NVERTICES];
 

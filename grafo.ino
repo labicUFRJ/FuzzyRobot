@@ -1,36 +1,36 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 /* Graph
 
-   I-----|sensor1|--
-                    |
-                    ||sensor2|
-                    |
-                    |
-                    |
-                    ||sensor3|
-                    |
-                     --|sensor4|-----|sensor5|-
-                                               |
-                                               |
-                                               F
+   I-----|sensor1 (id = 0 )|--
+                              |
+                              ||sensor2 (id = 1 )|
+                              |
+                              |
+                              |
+                              ||sensor3 (id = 2 )|
+                              |
+                               --|sensor4 (id = 3 )|-----|sensor5 (id = 4 )|-
+                                                                             |
+                                                                             |
+                                                                             F
 */
 
-//OU
+//OU ???????
 
 /* Graph
 
-   I-----|sensor1|--
-                    |
-                    |
-                    |
-                    |
-                    |
-                    ||sensor3|
-                    |
-                     ----------------|sensor5|--
-                                                |
-                                                |
-                                                F
+   I-----|sensor1 (id = 0 )|--
+                              |
+                              |
+                              |
+                              |
+                              |
+                              ||sensor2 (id = 1 )|
+                              |
+                               ----------------|sensor3 (id = 2 )|--
+                                                                    |
+                                                                    |
+                                                                    F
 */
 
 //////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ void drawSurface(){ // Faz o robo se mover na trajetoria desejava a partir do va
           
           /*   I-----|sensor1|--
                                |
-                               ||sensor2|
+                               |
                                |  */
         
           Serial.println(graph[idSensor][idSensor + 1]);
@@ -91,57 +91,45 @@ void drawSurface(){ // Faz o robo se mover na trajetoria desejava a partir do va
       break;
       
       case 1: // id 1
-                    /*
-                      |
-                      ||sensor2|
-                      |
-                      |
-                      |
-                      ||sensor3|
-                      |
-                    */
-          setHorizontal();  
-          idSensor = 255;
-      break;
-      
-      case 2: // id 2
                    /*
                    |
-                   ||sensor 3|
+                   ||sensor 2|
                    |
                    |
-                    --|sensor4|---
+                    ----------
                    */      
 
           motor.forward(graph[idSensor][idSensor + 1] / 2);
+          motor.stop();
+          delay(500);
           motor.left(90);
+          motor.stop();
+          delay(500);
           motor.forward(graph[idSensor][idSensor + 1] / 2);
-          idSensor = 255;
-      break;
-      
-      case 3: // id 3
-              /*
-              
-               --|sensor4|-----|sensor5|-
-                                         |
-                                         |
-                                         F
-              */
+          motor.stop();
+          delay(500);
           setHorizontal();
           idSensor = 255;
       break;
+
       
-      case 4: // id 4
+      case 2: // id 3
               /*
               
-              ---|sensor5|-
+              ---|sensor3|-
                           |
                           |
                           F
               */
           motor.forward(graph[idSensor][idSensor + 1] / 2);
+          motor.stop();
+          delay(500);
           motor.right(90);
+          motor.stop();
+          delay(500);
           motor.forward(graph[idSensor][idSensor + 1] / 2);      
+          motor.stop();
+          delay(500);
           fim = 1;         
           idSensor = 255;
       break;      
