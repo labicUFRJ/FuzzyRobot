@@ -1,5 +1,5 @@
 void cria_grafo(Grafo* g, int nvertices)  { 
-	g->lista = calloc(nvertices, sizeof(No*));
+	g->lista = (No**)calloc(nvertices, sizeof(No*));
 	g->nvertices = nvertices;
 }
 
@@ -21,8 +21,8 @@ void adiciona_aresta(Grafo *g, int id1, int id2, int peso,double tamPasso, doubl
 	while (*ap_l != NULL && (*ap_l)->id < id2)
 		ap_l = &(*ap_l)->prox;
 	if (*ap_l == NULL || (*ap_l)->id != id2) {
-		No* n = malloc(sizeof(No));
-		n->acao = calloc(3, sizeof(No));
+		No* n = (No*)malloc(sizeof(No));
+		n->acao = (double*)calloc(3, sizeof(double));
 		n->id = id2;
 		n->prox = *ap_l;
 		n->peso = peso;
@@ -179,22 +179,27 @@ void AcaoVertice(Grafo *g,int inicioTrecho, int fimTrecho){
                                 Serial.print("andar para frente: ");
                                 Serial.print(l->acao[i]);
                                 Serial.println();
+                                motor.forward(l->acao[i]);
+                                delay(500);
 				break;
 				case 1:
 //				printf("girar %f graus para direita \n", l->acao[i]);
                                 Serial.print("girar para direita: ");
                                 Serial.print(l->acao[i]);
                                 Serial.println();
+                                motor.right(l->acao[i]);
+                                delay(500);
 				break;
 				case 2:
 //				printf("girar %f graus para esquerda \n", l->acao[i]);
                                 Serial.print("girar para esquerda: ");
                                 Serial.print(l->acao[i]);
                                 Serial.println();
+                                motor.left(l->acao[i]);
+                                delay(500);
 				break;
 				default:break;
 			}
-			l->acao[i];
 	}
 	else{
 //		printf("não existe aresta %d->%d\n",inicioTrecho, fimTrecho );
@@ -217,20 +222,18 @@ void localizaAcao(Grafo *g, int verticeVisto){
 	}
 }
 
-/*void testaPercorreCaminho(Grafo *g,int destino){
-	int verticeVisto;
-	while(1){
-		printf("Insira o vertice visto: ");
-		scanf("%d", &verticeVisto);
-		if (verticeVisto == destino)
-		{
-			printf("Cheguei ao fim do caminho\n");
-			exit(0);
-		}else
-			localizaAcao(g, verticeVisto);
+void PercorreCaminho(Grafo *g,int destino){
+        int verticeVisto = idSensor;
+  	if (verticeVisto == destino)
+	{
+		printf("Cheguei ao fim do caminho\n");
+		exit(0);
+	}else{
+                idSensor = -1;
+		localizaAcao(g, verticeVisto);        
 	}
 }
-
+/*
 int main() {
 	printf("selecione a origem: ");
 	scanf("%d",&origem);
@@ -247,4 +250,4 @@ int main() {
 	destroi(&g);
 	destruirHeap(&h);
 	return 0;
-}
+}*/

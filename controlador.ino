@@ -16,6 +16,8 @@
 #include <math.h>
 #include "ponto.h"
 #include "libFuzzy.h"
+#include "libHeap.h"
+#include "libGrafo.h"
 #include <IRSendRev.h>
 
 #define INFINITO 10000
@@ -24,29 +26,6 @@
 int noPai[NVERTICES];
 int distNo[NVERTICES];
 int caminho[NVERTICES];
-
-typedef struct {
-	int *A;
-	int *peso;
-}Elem;
-
-typedef struct {
-	Elem elem;
-	int tamanhoAtual;
-	int tamanhoMaximo;
-} HEAP;
-
-typedef struct no{
-	int id; /* Vértice */
-	int peso;
-	struct no *prox;
-	double *acao;
-} No;
-
-typedef struct grafo {
-	int nvertices;      /* Número de nós */
-	No** lista;
-} Grafo;
 
 ////LibPosicao\\\\
 //Valor de referência para a horizontal do ambiente:
@@ -69,7 +48,7 @@ float saida[NUMOUTPUTS];
 float theta;
 float delta;
 
-int idSensor = 255;
+int idSensor = -1;
 
 boolean fim = 0;
 
@@ -77,8 +56,9 @@ DCMotor motor(0.5, 0.05, 0.05) ;
 
 Grafo g;
 HEAP h;
-int origem;
-int destino;
+
+int origem = 0;
+int destino = 5;
 
 void setup(){
   
@@ -91,6 +71,8 @@ void setup(){
   adiciona_aresta(&g,1,2,8,10,0,30);
   adiciona_aresta(&g,2,5,9,10,0,30);
   adiciona_aresta(&g,3,1,7,10,0,30);
+  dijkstra(&g,origem,h);
+  reconstroiCaminho(&g, origem, destino);
   
   attachInterrupt(2,receiveIdSensor,CHANGE);
   IR.Init(21); // inicializa o pino de sinal do receptor IR
@@ -99,9 +81,6 @@ void setup(){
   Serial1.begin(38400);
   //Serial2.begin(38400);
   //Serial1.begin(115200);
-  
-  buildGraph(); // constroi a matriz de adjacencia que representa grafo do predio
-  printGraph(); //imprime a matriz de adjacencia
   
   servoPingSetup();
   
@@ -139,10 +118,15 @@ void setup(){
 void loop(){
   //debug();
   //delay(600000);
-  
-  while(!fim){
+    switch(idSensor){
+        case -1 : controlador(); 
+        break;
+        default: PercorreCaminho(&g,destino);
+        break;
+    }
+/*  while(!fim){
     
-    drawSurface();
+//    drawSurface();
     /*        
     //Saídas do controlador na última iteração:
     theta = saida[0];
@@ -208,7 +192,6 @@ void loop(){
     Serial.println();
     Serial.println("===========================================");
     Serial.println();
-    */
-  }
+  
+  } */
 }
-
