@@ -18,8 +18,35 @@
 #include "libFuzzy.h"
 #include <IRSendRev.h>
 
-#define NVERTICES 4
-#define NEDGES 3
+#define INFINITO 10000
+#define NVERTICES 6
+
+int noPai[NVERTICES];
+int distNo[NVERTICES];
+int caminho[NVERTICES];
+
+typedef struct {
+	int *A;
+	int *peso;
+}Elem;
+
+typedef struct {
+	Elem elem;
+	int tamanhoAtual;
+	int tamanhoMaximo;
+} HEAP;
+
+typedef struct no{
+	int id; /* Vértice */
+	int peso;
+	struct no *prox;
+	double *acao;
+} No;
+
+typedef struct grafo {
+	int nvertices;      /* Número de nós */
+	No** lista;
+} Grafo;
 
 ////LibPosicao\\\\
 //Valor de referência para a horizontal do ambiente:
@@ -46,17 +73,28 @@ int idSensor = 255;
 
 boolean fim = 0;
 
-int edges[NEDGES] = {200,200,200};
-
-int graph[NVERTICES][NVERTICES];
-
 DCMotor motor(0.5, 0.05, 0.05) ;
+
+Grafo g;
+HEAP h;
+int origem;
+int destino;
 
 void setup(){
   
+  initHeap(&h, 6);
+  cria_grafo(&g, 6);
+  initCaminho(&g);
+  adiciona_aresta(&g,0,1,1,10,0,30);
+  adiciona_aresta(&g,0,2,3,10,0,30);
+  adiciona_aresta(&g,0,3,6,10,0,30);
+  adiciona_aresta(&g,1,2,8,10,0,30);
+  adiciona_aresta(&g,2,5,9,10,0,30);
+  adiciona_aresta(&g,3,1,7,10,0,30);
+  
   attachInterrupt(2,receiveIdSensor,CHANGE);
   IR.Init(21); // inicializa o pino de sinal do receptor IR
-  
+
   Serial.begin(38400);// frequencia do emissor de infravermelho
   Serial1.begin(38400);
   //Serial2.begin(38400);
