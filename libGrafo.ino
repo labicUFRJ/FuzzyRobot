@@ -42,6 +42,7 @@ int pesoAresta(Grafo *g, int id1, int id2) {
 	else{
 	  Serial.print('não existe aresta ');
           Serial.print(id1);
+          Serial.print("->");
           Serial.print(id2);	
           Serial.println();
 //        printf("não existe aresta %d->%d\n",id1, id2 );
@@ -200,6 +201,7 @@ void AcaoVertice(Grafo *g,int inicioTrecho, int fimTrecho){
 				break;
 				default:break;
 			}
+                setHorizontal();
 	}
 	else{
 //		printf("não existe aresta %d->%d\n",inicioTrecho, fimTrecho );
