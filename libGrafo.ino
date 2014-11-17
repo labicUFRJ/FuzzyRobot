@@ -229,27 +229,9 @@ void PercorreCaminho(Grafo *g,int destino){
   	if (verticeVisto == destino)
 	{
 		printf("Cheguei ao fim do caminho\n");
-		exit(0);
+		fim =1;
 	}else{
                 idSensor = -1;
 		localizaAcao(g, verticeVisto);        
 	}
 }
-/*
-int main() {
-	printf("selecione a origem: ");
-	scanf("%d",&origem);
-	printf("selecione o destino: ");
-	scanf("%d",&destino);
-
-	dijkstra(&g,origem,h);
-	reconstroiCaminho(&g, origem, destino);
-	imprimeCaminho(&g);
-	//imprimePais(&g);
-	//imprimeDistancias(&g);
-	testaPercorreCaminho(&g, destino);
-
-	destroi(&g);
-	destruirHeap(&h);
-	return 0;
-}*/

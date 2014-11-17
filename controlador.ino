@@ -65,8 +65,8 @@ void setup(){
   initHeap(&h, 6);
   cria_grafo(&g, 6);
   initCaminho(&g);
-  adiciona_aresta(&g,0,1,1,10,0,30);
-  adiciona_aresta(&g,0,2,3,10,0,30);
+  adiciona_aresta(&g,0,1,1,10,0,30); // parametros: Grafo g, v1, v2, pesoAresta, frente, direita, esquerda
+  adiciona_aresta(&g,0,2,3,10,0,90);
   adiciona_aresta(&g,0,3,6,10,0,30);
   adiciona_aresta(&g,1,2,8,10,0,30);
   adiciona_aresta(&g,2,5,9,10,0,30);
@@ -118,12 +118,14 @@ void setup(){
 void loop(){
   //debug();
   //delay(600000);
-    switch(idSensor){
-        case -1 : controlador(); 
-        break;
-        default: PercorreCaminho(&g,destino);
-        break;
-    }
+  while(!fim){
+      switch(idSensor){
+          case -1 : controlador(); 
+          break;
+          default: PercorreCaminho(&g,destino);
+          break;
+      }
+  }
 /*  while(!fim){
     
 //    drawSurface();
