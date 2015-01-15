@@ -69,7 +69,7 @@ void setup(){
   adiciona_aresta(&g,0,2,3,10,0,90);
   adiciona_aresta(&g,0,3,6,10,0,30);
   adiciona_aresta(&g,1,2,8,10,0,30);
-  adiciona_aresta(&g,2,5,9,10,0,30);
+  adiciona_aresta(&g,2,5,9,10,90,0);
   adiciona_aresta(&g,3,1,7,10,0,30);
   dijkstra(&g,origem,h);
   reconstroiCaminho(&g, origem, destino);
@@ -122,7 +122,9 @@ void loop(){
       switch(idSensor){
           case -1 : controlador(); 
           break;
-          default: PercorreCaminho(&g,destino);
+          default: 
+            detachInterrupt(2);
+            PercorreCaminho(&g,destino);
           break;
       }
   }

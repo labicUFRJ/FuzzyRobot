@@ -46,7 +46,7 @@ int pesoAresta(Grafo *g, int id1, int id2) {
           Serial.print(id2);	
           Serial.println();
 //        printf("não existe aresta %d->%d\n",id1, id2 );
-		return 0;
+          return 0;
 	}
 }
 
@@ -202,6 +202,7 @@ void AcaoVertice(Grafo *g,int inicioTrecho, int fimTrecho){
 				default:break;
 			}
                 setHorizontal();
+                attachInterrupt(2,receiveIdSensor,CHANGE);
 	}
 	else{
 //		printf("não existe aresta %d->%d\n",inicioTrecho, fimTrecho );
@@ -220,7 +221,6 @@ void localizaAcao(Grafo *g, int verticeVisto){
 		{
 			AcaoVertice(g, caminho[i], caminho[i+1]);
 		}
-		
 	}
 }
 
