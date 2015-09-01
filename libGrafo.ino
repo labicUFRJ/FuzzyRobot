@@ -226,11 +226,13 @@ void localizaAcao(Grafo *g, int verticeVisto){
 
 void PercorreCaminho(Grafo *g,int destino){
         int verticeVisto = idSensor;
+        noAtual = verticeVisto;
   	if (verticeVisto == destino)
 	{
 		printf("Cheguei ao fim do caminho\n");
 		fim =1;
 	}else{
+                printf("Cheguei ao -1\n");
                 idSensor = -1;
 		localizaAcao(g, verticeVisto);        
 	}

@@ -49,6 +49,7 @@ float theta;
 float delta;
 
 int idSensor = -1;
+int noAtual = -1;
 
 boolean fim = 0;
 
@@ -62,15 +63,17 @@ int destino = 5;
 
 void setup(){
   
+  pinMode(13, OUTPUT);
+  
   initHeap(&h, 6);
   cria_grafo(&g, 6);
   initCaminho(&g);
-  adiciona_aresta(&g,0,1,1,10,0,30); // parametros: Grafo g, v1, v2, pesoAresta, frente, direita, esquerda
-  adiciona_aresta(&g,0,2,3,10,0,90);
-  adiciona_aresta(&g,0,3,6,10,0,30);
-  adiciona_aresta(&g,1,2,8,10,0,30);
-  adiciona_aresta(&g,2,5,9,10,90,0);
-  adiciona_aresta(&g,3,1,7,10,0,30);
+  adiciona_aresta(&g,0,1,1,50,0,30); // parametros: Grafo g, v1, v2, pesoAresta, frente, direita, esquerda
+  adiciona_aresta(&g,0,2,3,50,0,90);
+  adiciona_aresta(&g,0,3,6,50,0,30);
+  adiciona_aresta(&g,1,2,8,50,0,30);
+  adiciona_aresta(&g,2,5,9,50,90,0);
+  adiciona_aresta(&g,3,1,7,50,0,30);
   dijkstra(&g,origem,h);
   reconstroiCaminho(&g, origem, destino);
   
@@ -118,12 +121,20 @@ void setup(){
 void loop(){
   //debug();
   //delay(600000);
+  int i;
+  Serial.print("Caminho: ");
+  for (i=0;i<NVERTICES;i++)
+    Serial.print(caminho[i] );
+    
   while(!fim){
+//      blinkById();
+//    Serial.print("Id antes do switch: ");
+//      Serial.println(idSensor);
       switch(idSensor){
-          case -1 : controlador(); 
+          case -1 : 
+            controlador(); 
           break;
           default: 
-            detachInterrupt(2);
             PercorreCaminho(&g,destino);
           break;
       }
